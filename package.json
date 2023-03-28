@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/iLoveHanekawa/trpc-practice/issues"
   },
-  "homepage": "https://github.com/iLoveHanekawa/trpc-practice#readme"
+  "homepage": "https://github.com/iLoveHanekawa/trpc-practice#readme",
+  "dependencies": {
+    "@trpc/client": "^10.18.0",
+    "@trpc/server": "^10.18.0",
+    "zod": "^3.21.4"
+  }
 }
