@@ -1,44 +1,31 @@
-import { initTRPC } from "@trpc/server";
+import { inferAsyncReturnType, initTRPC } from '@trpc/server';
+import * as trpcExpress from '@trpc/server/adapters/express';
+import express from 'express'
 import { z } from 'zod'
 
-const t = initTRPC.create();
+// created for each request
+const createContext = ({
+  req,
+  res,
+}: trpcExpress.CreateExpressContextOptions) => ({}); // no context
+type Context = inferAsyncReturnType<typeof createContext>;
 
-const router = t.router;
-const publicProcedure = t.procedure;
-
-interface User {
-    id: string;
-    name: string;
-}
-
-export const userList: User[] = [
-    {
-        id: '1',
-      name: 'KATT',
-    },
-];
-
-const appRouter = router({
-
-    userById: publicProcedure.input((val: unknown) => {
-        if(typeof val === 'string') return val;
-        throw new Error(`Invalid input: ${typeof val}`);
-    }).query((req) => {
-        const { input } = req;
-        const user = userList.find((u) => {
-            return u.id === input;
-        })
-        return user;
+const t = initTRPC.context<Context>().create();
+export const appRouter = t.router({
+    getUser: t.procedure.input(z.string()).query((req) => {
+      req.input; // string
+      return { id: req.input, name: 'Bilbo' };
     }),
-    userCreate: publicProcedure.input(z.object({ name: z.string() })).mutation((req) => {
-        const id = `${Math.random()}`
-        const user: User = {
-            id,
-            name: req.input.name
-        }
-        userList.push(user)
-        return user
-    })
+  });
 
-});
-export type AppRouter = typeof appRouter;
+const app = express();
+
+app.use(
+  '/trpc',
+  trpcExpress.createExpressMiddleware({
+    router: appRouter,
+    createContext,
+  }),
+);
+
+app.listen(4000);

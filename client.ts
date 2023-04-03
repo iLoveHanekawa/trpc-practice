@@ -1,23 +1,17 @@
-import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
-import type { AppRouter } from ".";
-import { userList } from ".";
+// import { createTRPCProxyClient, httpBatchLink } from '@trpc/client'
+// import { type AppRouter } from '.'
 
-const trpc = createTRPCProxyClient<AppRouter>({
-    links: [
-        httpBatchLink({
-            url: 'http://localhost:3000/trpc'
-        })
-    ]
-})
+// const trpc = createTRPCProxyClient<AppRouter>({
+//     links: [
+//         httpBatchLink({
+//             url: 'http://localhost:3000/trpc'
+//         })
+//     ]
+// })
 
-console.log();
+// async function main() {
+//     const { name } = await trpc.getUser.query("hi")
+//     console.log(name)
+// }
 
-console.log(userList)
-
-const createObject = async (name: string) => {
-    const user = trpc.userCreate.mutate({ name: name })
-}
-
-createObject('Arjun')
-
-console.log(userList)
+// main()
