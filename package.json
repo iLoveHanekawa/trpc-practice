@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cd server && nodemon --exec npx ts-node server",
+    "serve-json": "json-server --watch ./db.json --port 4000"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,9 @@
     "@trpc/client": "^10.19.1",
     "@trpc/server": "^10.19.1",
     "express": "^4.18.2",
+    "json-server": "^0.17.3",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1",
     "zod": "^3.21.4"
   },
   "devDependencies": {
