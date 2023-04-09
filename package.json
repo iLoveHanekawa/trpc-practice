@@ -1,0 +1,25 @@
+{
+  "name": "trpc-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iLoveHanekawa/trpc-practice.git"
+  },
+  "author": "iLoveHanekawa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iLoveHanekawa/trpc-practice/issues"
+  },
+  "homepage": "https://github.com/iLoveHanekawa/trpc-practice#readme",
+  "dependencies": {
+    "@trpc/client": "^10.19.1",
+    "@trpc/server": "^10.19.1",
+    "express": "^4.18.2",
+    "zod": "^3.21.4"
+  }
+}
