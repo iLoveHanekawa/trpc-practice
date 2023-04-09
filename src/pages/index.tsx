@@ -1,9 +1,13 @@
 import Head from 'next/head'
 import { Inter } from 'next/font/google'
-import Link from 'next/link'
+import { trpcClient } from '@/utils/trpc'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+  const greeting = trpcClient.hello.useQuery({ text: 'Arjun' })
+  if(!greeting.data) return <div>Loading...</div>
+
   return (
     <>
       <Head>
@@ -14,7 +18,7 @@ export default function Home() {
       </Head>
       <main >
         <div className = {inter.className}>
-          Nextjs
+          Hello {greeting.data.greeting}
         </div>
       </main>
     </>
