@@ -17,6 +17,8 @@ const client = (0, client_1.createTRPCProxyClient)({
 });
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
+        const heroes = yield client.findmany.query();
+        console.log(heroes);
     });
 }
 main();

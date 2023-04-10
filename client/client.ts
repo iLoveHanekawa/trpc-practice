@@ -8,6 +8,8 @@ const client = createTRPCProxyClient<AppRouter>({
 })
 
 async function main() {
+    const heroes = await client.findmany.query()
+    console.log(heroes)
 }
 
 main()
