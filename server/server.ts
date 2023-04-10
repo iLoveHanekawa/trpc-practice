@@ -2,7 +2,6 @@ import { initTRPC } from '@trpc/server'
 import { z } from 'zod'
 import express, { Request, Response } from 'express'
 import { createExpressMiddleware } from '@trpc/server/adapters/express'
-import { appRouter } from '../routers/_app'
 
 const app = express()
 app.get('/', (req: Request, res: Response) => {
@@ -10,8 +9,21 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 const t = initTRPC.create()
-export const router = t.router
-export const procedure = t.procedure
+const appRouter = t.router({
+    get: t.procedure.query(async() => {
+        const res = await fetch('http://localhost:4000/superheroes')
+        const data = await res.json()
+        return { heroes: data }
+    }),
+    findone: t.procedure.input(z.string()).query(async(req) => {
+        const { input } = req
+        const res = await fetch(`http://localhost:4000/superheroes/${input}`)
+        console.log(`http://localhost:4000/superheroes/${input}`)
+        const data = await res.json()
+        return { hero: data }
+    })
+})
+
 
 const port = Number(process.env.PORT) || 3000
 app.use('/trpc', createExpressMiddleware({
@@ -25,3 +37,5 @@ const start = (port: number) => {
 }
 
 start(port)
+
+export type AppRouter = typeof appRouter
