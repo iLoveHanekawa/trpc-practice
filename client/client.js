@@ -17,8 +17,6 @@ const client = (0, client_1.createTRPCProxyClient)({
 });
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        const data = yield client.findone.query(1);
-        console.log(data);
     });
 }
 main();

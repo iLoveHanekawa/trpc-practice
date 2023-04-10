@@ -21,6 +21,41 @@ const appRouter = t.router({
         console.log(`http://localhost:4000/superheroes/${input}`)
         const data = await res.json()
         return { hero: data }
+    }),
+    create: t.procedure.input(z.object({
+        name: z.string(),
+        alterEgo: z.string()
+    })).mutation(async (req) => {
+        const { input } = req
+        const hero = await fetch('http://localhost:4000/superheroes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(input)
+        })
+        const data = await hero.json()
+        return { hero: data }
+    }),
+    delete: t.procedure.input(z.number()).mutation(async(req) => {
+        const { input } = req
+        await fetch(`http://localhost:4000/superheroes/${input}`, {
+            method: 'DELETE'
+        })
+    }),
+    update: t.procedure.input(z.object({
+        id: z.number(),
+        name: z.string()
+    })).mutation(async (req) => {
+        const { input } = req
+        const hero = await fetch(`http://localhost:4000/superheroes/${input.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: input.name })
+        })
+        return { hero }
     })
 })
 

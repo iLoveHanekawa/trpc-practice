@@ -33,6 +33,41 @@ const appRouter = t.router({
         console.log(`http://localhost:4000/superheroes/${input}`);
         const data = yield res.json();
         return { hero: data };
+    })),
+    create: t.procedure.input(zod_1.z.object({
+        name: zod_1.z.string(),
+        alterEgo: zod_1.z.string()
+    })).mutation((req) => __awaiter(void 0, void 0, void 0, function* () {
+        const { input } = req;
+        const hero = yield fetch('http://localhost:4000/superheroes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(input)
+        });
+        const data = yield hero.json();
+        return { hero: data };
+    })),
+    delete: t.procedure.input(zod_1.z.number()).mutation((req) => __awaiter(void 0, void 0, void 0, function* () {
+        const { input } = req;
+        yield fetch(`http://localhost:4000/superheroes/${input}`, {
+            method: 'DELETE'
+        });
+    })),
+    update: t.procedure.input(zod_1.z.object({
+        id: zod_1.z.number(),
+        name: zod_1.z.string()
+    })).mutation((req) => __awaiter(void 0, void 0, void 0, function* () {
+        const { input } = req;
+        const hero = yield fetch(`http://localhost:4000/superheroes/${input.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: input.name })
+        });
+        return { hero };
     }))
 });
 const port = Number(process.env.PORT) || 3000;
