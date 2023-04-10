@@ -10,12 +10,12 @@ app.get('/', (req: Request, res: Response) => {
 
 const t = initTRPC.create()
 const appRouter = t.router({
-    get: t.procedure.query(async() => {
+    findmany: t.procedure.query(async() => {
         const res = await fetch('http://localhost:4000/superheroes')
         const data = await res.json()
         return { heroes: data }
     }),
-    findone: t.procedure.input(z.string()).query(async(req) => {
+    findone: t.procedure.input(z.number()).query(async(req) => {
         const { input } = req
         const res = await fetch(`http://localhost:4000/superheroes/${input}`)
         console.log(`http://localhost:4000/superheroes/${input}`)

@@ -8,7 +8,7 @@ const client = createTRPCProxyClient<AppRouter>({
 })
 
 async function main() {
-    const data = await client.findone.query('2')
+    const data = await client.findone.query(1)
     console.log(data)
 }
 
